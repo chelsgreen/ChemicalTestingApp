@@ -1,10 +1,11 @@
 ﻿using System;
+using System.Threading;
 
 namespace ChemicalTestingApp
 {
     class Program
     {
-
+        
         static void Main(string[] args)
         {
             int menuChoice;
@@ -30,7 +31,7 @@ namespace ChemicalTestingApp
                    
                 if (menuChoice == 1)
                 {
-                    ChemicalTest(1);
+                    ChemicalTest();
                 }
                 else if (menuChoice == 2)
                 {
@@ -45,31 +46,45 @@ namespace ChemicalTestingApp
             }
         }
 
-        static void ChemicalTest(int gametype)
+        static void ChemicalTest()
         {
             //Generate Random Number of Germs 
-            Random r = new Random();
-            int rInt = r.Next(1,1000);
-            Console.WriteLine($"Your Random Amount of Germs Generated was {rInt}\n");
+           
 
+            string chemical;
             Console.WriteLine("Please Enter The Chemical you would like to test");
-            int x;
-            if (int.TryParse(Console.ReadLine(), out x))
+            chemical = Console.ReadLine();
+
+            float sumEfficency = 0;
+
+            //Runs five times 
+            for (int i = 0; i < 5; i++)
             {
 
+                Random r = new Random();
+                int rInt = r.Next(200, 1000);
+                Console.WriteLine($"Your Random Amount of Germs Generated was {rInt}");
+
+                Console.WriteLine($"Please Wait 30 seconds");
+                System.Threading.Thread.Sleep(30000);
+
+                Random j = new Random();
+                int jInt = j.Next(10, 200);
+                int Germs = rInt - jInt;
+                Console.WriteLine($"The Second Messurement of Germs is {Germs} ");
+
+                var efficency = (Germs) / 30;
+                Console.WriteLine($"The Efficency of {chemical} is {efficency}\n");
+
+                sumEfficency += efficency;
+                
             }
-            else
-            {
+              var average = sumEfficency /5;
+            Console.WriteLine($"The average Efficeny of this Chemcial {average}");
 
-            }
-            Console.WriteLine($"Please Wait");
-            Random j = new Random();
-            int jInt = j.Next(10,200);
-            Console.WriteLine($"{rInt}");
-
-
-
+                   
         }
+
         //check the interger
          static int CheckInt(string question, int min, int max)
         {
@@ -102,7 +117,7 @@ namespace ChemicalTestingApp
 
 
             }
-         }   
-        
+         }
+      
     }
 }
